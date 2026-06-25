@@ -2,6 +2,8 @@
 
 Azure-first Terraform drift detection tool that reads Terraform state from the `azurerm` backend in Azure Blob Storage, inventories live Azure resources, normalizes both views, and reports drift.
 
+![alt text](pii_blurred_image.png)
+
 ## Current scope
 
 - Terraform state parsing for supported Azure resources
