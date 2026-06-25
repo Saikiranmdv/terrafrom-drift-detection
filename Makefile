@@ -2,7 +2,7 @@ PYTHON ?= python3
 PYCACHE_PREFIX ?= /private/tmp/terraform-drift-pycache
 CONFIG ?= config/azure.template.yaml
 
-.PHONY: bootstrap init validate doctor test scan run explain
+.PHONY: bootstrap init validate doctor test lint scan run explain
 
 bootstrap:
 	$(PYTHON) -m venv .venv
@@ -21,6 +21,9 @@ doctor:
 test:
 	PYTHONPYCACHEPREFIX=$(PYCACHE_PREFIX) $(PYTHON) -m compileall src tests
 	PYTHONPATH=src:. $(PYTHON) -m unittest discover -s tests -p 'test_*.py'
+
+lint:
+	bash ./scripts/lint.sh
 
 scan:
 	PYTHONPATH=src .venv/bin/terraform-drift scan --config $(CONFIG) --json
