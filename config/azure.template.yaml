@@ -1,0 +1,28 @@
+state_sources:
+  - name: primary
+    type: azurerm_backend
+    storage_account_name: ${TFSTATE_STORAGE_ACCOUNT_NAME}
+    container_name: ${TFSTATE_CONTAINER_NAME}
+    key: ${TFSTATE_BLOB_KEY}
+    auth:
+      mode: ${AZURE_AUTH_MODE:-azure_cli}
+      tenant_id: ${AZURE_TENANT_ID}
+      client_id: ${AZURE_CLIENT_ID:-}
+      client_secret: ${AZURE_CLIENT_SECRET:-}
+
+scan_scope:
+  subscriptions:
+    - ${AZURE_SUBSCRIPTION_ID}
+  include_terraform_types:
+    - azurerm_resource_group
+    - azurerm_virtual_network
+    - azurerm_subnet
+    - azurerm_network_security_group
+    - azurerm_storage_account
+    - azurerm_linux_virtual_machine
+    - azurerm_windows_virtual_machine
+  ignored_paths:
+    - security_rules[*].etag
+    - network_interface_ids[*].primary
+  activity_log_lookback_hours: ${ACTIVITY_LOG_LOOKBACK_HOURS:-168}
+
